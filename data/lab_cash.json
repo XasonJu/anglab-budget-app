@@ -1,0 +1,38 @@
+[
+  {
+    "type": "inflow",
+    "amount": 25528.0,
+    "source": "先前餘額",
+    "date": "2025-05-06"
+  },
+  {
+    "amount": 1200.0,
+    "type": "outflow",
+    "note": "發獎金給 李亭誼",
+    "date": "2025-05-06"
+  },
+  {
+    "amount": 1200.0,
+    "type": "inflow",
+    "note": "",
+    "date": "2025-05-06"
+  },
+  {
+    "amount": 24000.0,
+    "type": "inflow",
+    "note": "4月計畫薪資流入",
+    "date": "2025-05-06"
+  },
+  {
+    "amount": 24000.0,
+    "type": "outflow",
+    "note": "4月計畫薪資流入",
+    "date": "2025-05-06"
+  },
+  {
+    "amount": 76.0,
+    "type": "outflow",
+    "note": "寄件 購買信封袋",
+    "date": "2025-05-06"
+  }
+]

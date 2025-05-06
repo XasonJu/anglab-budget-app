@@ -1,0 +1,90 @@
+[
+  {
+    "name": "生合生物科技股份有限公司",
+    "vat": "70402724",
+    "address": "高雄市路竹區北嶺六路66號",
+    "phone": "07-6955680",
+    "email": "service@synbiotech.com.tw",
+    "website": "https://www.synbiotech.com/",
+    "representative": "添加劑等",
+    "note": "無",
+    "deposit": 0.0
+  },
+  {
+    "name": "信德",
+    "vat": "20601038",
+    "address": "11089 台北市中正區羅斯福路三段210巷8弄15號",
+    "phone": " 02-23652835",
+    "email": "shineteh@ms34.hinet.net",
+    "website": "https://www.shineteh.com.tw/index.html",
+    "representative": "實驗耗材、藥品、儀器",
+    "note": "",
+    "deposit": 85275.0
+  },
+  {
+    "name": "海力克",
+    "vat": "50915612",
+    "address": "桃園市龜山區文青里文藝街75號",
+    "phone": "03-3973972",
+    "email": "Info@biohelix.com.tw",
+    "website": "https://www.biohelix.com.tw/",
+    "representative": "",
+    "note": "",
+    "deposit": 79000.0
+  },
+  {
+    "name": "鉑恩",
+    "vat": "54557840",
+    "address": "臺南市永康區塩行里正南五街333號1樓",
+    "phone": "06-2530855",
+    "email": "",
+    "website": "",
+    "representative": "",
+    "note": "",
+    "deposit": 27200.0
+  },
+  {
+    "name": "淮特",
+    "vat": "54064389",
+    "address": "臺南市永康區鹽洲里洲尾街152巷33號1樓",
+    "phone": "06-2227396",
+    "email": "",
+    "website": "",
+    "representative": "",
+    "note": "",
+    "deposit": 27800.0
+  },
+  {
+    "name": "雷文虎克",
+    "vat": "91078929",
+    "address": "臺北市大安區忠孝東路4段30號10樓",
+    "phone": "02-23772318",
+    "email": "",
+    "website": "",
+    "representative": "",
+    "note": "",
+    "deposit": 21000.0
+  },
+  {
+    "name": "東昇化工",
+    "vat": "52882638",
+    "address": "臺灣臺中市南屯區精誠南路135巷三號",
+    "phone": "04-24729909",
+    "email": "kingtec@kingtec.com.tw",
+    "website": "https://www.kingtec.com.tw/",
+    "representative": "官方LINE",
+    "note": "",
+    "deposit": 3652.0
+  },
+  {
+    "name": "巨興",
+    "vat": "81264522",
+    "address": "高雄市前鎮加工出口區南七路3號",
+    "phone": "07-8151988",
+    "email": "service@hi-point.com.tw",
+    "website": "https://www.hi-point.com.tw/about_us.asp",
+    "representative": "",
+    "note": "",
+    "deposit": 26000.0
+  }
+]
