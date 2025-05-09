@@ -45,12 +45,14 @@ def main():
         "plans.json": "plans",
         "student_cash_log.json": "student_cash_log",
         "students.json": "students",
-        "vendors.json": "vendors"
+        "vendors.json": "vendors",
+        "notes.json": "notes",          # 新增
+        "login_log.json": "login_log"   # 新增
     }
 
-    json_dir = Path("data_json")
+    json_dir = Path("data")  # 改成與 app.py 一致的路徑
     if not json_dir.exists():
-        st.error("⚠️ 找不到 data_json 目錄，請上傳資料或建資料夾")
+        st.error("⚠️ 找不到 data 目錄，請上傳資料或建資料夾")
         return
 
     for file, sheet_name in file_map.items():
