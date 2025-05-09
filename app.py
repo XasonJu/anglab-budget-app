@@ -48,7 +48,7 @@ def load_data():
 # 身份驗證
 def authenticate():
     try:
-        st.image("ANG LAB LOGO.png", width=150)
+        st.image("data/ANG LAB LOGO.png", width=120)
     except FileNotFoundError:
         st.warning("未找到 ANG LAB LOGO.png，顯示預設標題")
     st.markdown("<h1 style='font-size:2em;margin-bottom:0;'>經費規劃器</h1>", unsafe_allow_html=True)
@@ -572,7 +572,7 @@ def main():
     load_data()
     st.set_page_config("Lab Budget System", layout="wide")
     try:
-        st.image("ANG LAB LOGO.png", width=150)
+        st.image("data/ANG LAB LOGO.png", width=150)
     except FileNotFoundError:
         st.warning("未找到 ANG LAB LOGO.png，顯示預設標題")
     st.markdown("<h1 style='font-size:2.2em;margin-bottom:0;'>經費規劃器</h1>", unsafe_allow_html=True)
