@@ -266,9 +266,9 @@ def funds_view():
     if selected_student and selected_student != "尚無學生":
         for s in students:
             if s["name"] == selected_student:
-                with st.form(f"funds_edit_student_{selected_student}"):
-                    new_student_name = st.text_input("學生姓名", value=s["name"], key=f"funds_edit_name_{selected_student}")
-                    new_student_balance = st.number_input("餘額", value=s["balance"], step=100.0, key=f"funds_edit_balance_{selected_student}")
+                with st.form(f"funds_edit_student_{selected_student}_{s['name']}"):
+                    new_student_name = st.text_input("學生姓名", value=s["name"], key=f"funds_edit_name_{selected_student}_{s['name']}")
+                    new_student_balance = st.number_input("餘額", value=s["balance"], step=100.0, key=f"funds_edit_balance_{selected_student}_{s['name']}")
                     if st.form_submit_button("儲存修改"):
                         s["name"] = new_student_name
                         s["balance"] = new_student_balance
@@ -381,6 +381,14 @@ def funds_view():
                         "date": cash_date.strftime("%Y-%m-%d")
                     })
                     save_json("data/lab_cash.json", lab_cash)
+                    records.append({
+                        "name": "Lab Cash",
+                        "action": "Adjustment",
+                        "amount": cash_amount if cash_type == "inflow" else -cash_amount,
+                        "note": cash_note,
+                        "date": cash_date.strftime("%Y-%m-%d")
+                    })
+                    save_json("data/student_cash_log.json", records)
                     st.success("已更新金庫")
                     st.rerun()
                 else:
