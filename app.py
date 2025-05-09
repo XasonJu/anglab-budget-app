@@ -66,7 +66,7 @@ def authenticate():
         else:
             st.error("密碼錯誤，請再試一次")
 
-# 主應用（已移除 st.image()，改用純文字顯示）
+# 主應用
 def main():
     import os
     load_data()
@@ -259,16 +259,28 @@ def finance_view():
                 st.warning("已刪除")
                 st.rerun()
 
-# 代墊永動機
+# 代墊永動機（已調整順序並新增移除功能）
 def funds_view():
     lab_cash = load_json("data/lab_cash.json", [])
     lab_total = sum(c["amount"] if c["type"] == "inflow" else -c["amount"] for c in lab_cash)
     st.header("🌀 代墊永動機")
     st.metric("實驗室金庫總額", f"${lab_total:,.0f}")
 
+    # 學生帳戶餘額
     students = load_json("data/students.json", [])
-    records = load_json("data/student_cash_log.json", [])
+    st.subheader("💰 學生帳戶餘額")
+    for i, s in enumerate(students):
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.markdown(f"<div style='font-size:1.3em'><b>{s['name']}</b>：${s['balance']:.0f}</div>", unsafe_allow_html=True)
+        with col2:
+            if st.button("🗑️ 移除", key=f"funds_remove_student_{i}_{s['name']}"):
+                del students[i]
+                save_json("data/students.json", students)
+                st.success(f"已移除學生 {s['name']}")
+                st.rerun()
 
+    # 新增學生
     with st.expander("➕ 新增學生"):
         with st.form("funds_add_student"):
             new_name = st.text_input("學生姓名", key="funds_new_name")
@@ -279,33 +291,31 @@ def funds_view():
                 st.success("已新增學生")
                 st.rerun()
 
-    st.subheader("✏️ 編輯學生")
-    student_names = [s["name"] for s in students]
-    selected_student = st.selectbox("選擇學生", student_names if student_names else ["尚無學生"], key="funds_edit_student")
-    if selected_student and selected_student != "尚無學生":
-        for s in students:
-            if s["name"] == selected_student:
-                with st.form(f"funds_edit_student_{selected_student}_{s['name']}"):
-                    new_student_name = st.text_input("學生姓名", value=s["name"], key=f"funds_edit_name_{selected_student}_{s['name']}")
-                    new_student_balance = st.number_input("餘額", value=s["balance"], step=100.0, key=f"funds_edit_balance_{selected_student}_{s['name']}")
-                    if st.form_submit_button("儲存修改"):
-                        s["name"] = new_student_name
-                        s["balance"] = new_student_balance
-                        save_json("data/students.json", students)
-                        st.success("已更新學生資訊")
-                        st.rerun()
-                break
+    # 資金異動紀錄
+    records = load_json("data/student_cash_log.json", [])
+    st.subheader("📄 資金異動紀錄")
+    for i, r in enumerate(records[::-1]):
+        idx = len(records) - 1 - i
+        with st.expander(f"{r.get('date', '-')}: {r.get('name', '-')} - {r.get('action', '-')} - ${r.get('amount', 0):.0f}"):
+            st.markdown(f"**學生**: {r.get('name', '-')}")
+            st.markdown(f"**動作**: {r.get('action', '-')}")
+            st.markdown(f"**金額**: ${r.get('amount', 0):.0f}")
+            st.markdown(f"**備註**: {r.get('note', '-')}")
+            st.markdown(f"**日期**: {r.get('date', '-')}")
+            if st.button("🗑️ 刪除", key=f"funds_del_{i}_{r.get('name', '')}_{r.get('note', '')}"):
+                del records[idx]
+                save_json("data/student_cash_log.json", records)
+                st.success("已刪除紀錄")
+                st.rerun()
 
-    st.subheader("💰 學生帳戶餘額")
-    for s in students:
-        st.markdown(f"<div style='font-size:1.3em'><b>{s['name']}</b>：${s['balance']:.0f}</div>", unsafe_allow_html=True)
-
+    # 學生資金異動
     st.subheader("🎓 學生資金異動")
-    selected = st.selectbox("學生", student_names if student_names else ["尚無學生"], key="funds_action_select")
-    action = st.selectbox("動作", ["代墊", "報銷", "發獎金", "手動調整"], key="funds_action_type")
-    amount = st.number_input("金額", min_value=0.0, step=100.0, key="funds_amount")
+    student_names = [s["name"] for s in students]
+    selected = st.selectbox("學生", student_names if student_names else ["尚無學生"], index=0 if "許羽承" in student_names else 0, key="funds_action_select")
+    action = st.selectbox("動作", ["代墊", "報銷", "發獎金", "手動調整"], index=0, key="funds_action_type")
+    amount = st.number_input("金額", min_value=0.0, step=100.0, value=0.0, key="funds_amount")
     note = st.text_input("備註", key="funds_note")
-    date = st.date_input("日期", value=datetime.today(), key="funds_date")
+    date = st.date_input("日期", value=datetime(2025, 5, 9), key="funds_date")
 
     if st.button("執行異動", key="funds_execute"):
         if selected and selected != "尚無學生":
@@ -370,21 +380,25 @@ def funds_view():
                 st.success("資金異動完成")
                 st.rerun()
 
-    st.subheader("📄 資金異動紀錄")
-    for i, r in enumerate(records[::-1]):
-        idx = len(records) - 1 - i
-        with st.expander(f"{r.get('date', '-')}: {r.get('name', '-')} - {r.get('action', '-')} - ${r.get('amount', 0):.0f}"):
-            st.markdown(f"**學生**: {r.get('name', '-')}")
-            st.markdown(f"**動作**: {r.get('action', '-')}")
-            st.markdown(f"**金額**: ${r.get('amount', 0):.0f}")
-            st.markdown(f"**備註**: {r.get('note', '-')}")
-            st.markdown(f"**日期**: {r.get('date', '-')}")
-            if st.button("🗑️ 刪除", key=f"funds_del_{i}_{r.get('name', '')}_{r.get('note', '')}"):
-                del records[idx]
-                save_json("data/student_cash_log.json", records)
-                st.success("已刪除紀錄")
-                st.rerun()
+    # 編輯學生
+    st.subheader("✏️ 編輯學生")
+    student_names = [s["name"] for s in students]
+    selected_student = st.selectbox("選擇學生", student_names if student_names else ["尚無學生"], key="funds_edit_student")
+    if selected_student and selected_student != "尚無學生":
+        for s in students:
+            if s["name"] == selected_student:
+                with st.form(f"funds_edit_student_{selected_student}_{s['name']}"):
+                    new_student_name = st.text_input("學生姓名", value=s["name"], key=f"funds_edit_name_{selected_student}_{s['name']}")
+                    new_student_balance = st.number_input("餘額", value=s["balance"], step=100.0, key=f"funds_edit_balance_{selected_student}_{s['name']}")
+                    if st.form_submit_button("儲存修改"):
+                        s["name"] = new_student_name
+                        s["balance"] = new_student_balance
+                        save_json("data/students.json", students)
+                        st.success("已更新學生資訊")
+                        st.rerun()
+                break
 
+    # 手動調整金庫餘額
     with st.expander("🧰 手動調整金庫餘額"):
         with st.form("funds_adjust_cash"):
             cash_amount = st.number_input("金額", step=100.0, key="funds_cash_amount")
