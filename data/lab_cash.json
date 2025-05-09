@@ -34,5 +34,35 @@
     "type": "outflow",
     "note": "寄件 購買信封袋",
     "date": "2025-05-06"
+  },
+  {
+    "amount": 0.0,
+    "type": "inflow",
+    "note": "100",
+    "date": "2025-05-09"
+  },
+  {
+    "amount": 0.0,
+    "type": "outflow",
+    "note": "100",
+    "date": "2025-05-09"
+  },
+  {
+    "amount": 0.0,
+    "type": "outflow",
+    "note": "100",
+    "date": "2025-05-09"
+  },
+  {
+    "amount": 100.0,
+    "type": "outflow",
+    "note": "",
+    "date": "2025-05-09"
+  },
+  {
+    "amount": 100.0,
+    "type": "inflow",
+    "note": "",
+    "date": "2025-05-09"
   }
 ]
