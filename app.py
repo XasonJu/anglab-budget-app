@@ -47,11 +47,9 @@ def load_data():
 
 # 身份驗證
 def authenticate():
-    try:
-        st.image("data/ANG LAB LOGO.png", width=120)
-    except FileNotFoundError:
-        st.warning("未找到 ANG LAB LOGO.png，顯示預設標題")
-    st.markdown("<h1 style='font-size:2em;margin-bottom:0;'>經費規劃器</h1>", unsafe_allow_html=True)
+    # 使用大字顯示 "ANG"，小字顯示 "Animal Nutrigenomics Lab"
+    st.markdown("<h1 style='font-size:3em;margin-bottom:0;'>ANG</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:0.9em;color:gray;margin-top:0;'>Animal Nutrigenomics Lab</p>", unsafe_allow_html=True)
     st.markdown("<p style='font-size:0.8em;color:gray;margin-top:0;'>made by YuCheng Xu</p>", unsafe_allow_html=True)
 
     st.markdown("---")
@@ -67,6 +65,28 @@ def authenticate():
             st.rerun()
         else:
             st.error("密碼錯誤，請再試一次")
+
+# 主應用
+def main():
+    load_data()
+    st.set_page_config("Lab Budget System", layout="wide")
+    # 使用大字顯示 "ANG"，小字顯示 "Animal Nutrigenomics Lab"
+    st.markdown("<h1 style='font-size:3.2em;margin-bottom:0;'>ANG</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:1em;color:gray;margin-top:0;'>Animal Nutrigenomics Lab</p>", unsafe_allow_html=True)
+
+    st.markdown(f"**使用者**: {st.session_state.jarvis_username}")
+    login_log = load_json("data/login_log.json", [])
+    if login_log:
+        last_login = login_log[-1]["login_time"]
+        st.markdown(f"**最近登入時間**: {last_login}")
+
+    tabs = st.tabs(["📊 預算總覽", "💸 經費紀錄 / 規劃", "🌀 代墊永動機", "📁 計畫管理", "🏢 廠商紀錄", "📒 經費規劃筆記"])
+    with tabs[0]: overview_view()
+    with tabs[1]: finance_view()
+    with tabs[2]: funds_view()
+    with tabs[3]: project_view()
+    with tabs[4]: vendor_view()
+    with tabs[5]: notes_view()
 
 # 預算總覽
 def get_spending(project_name):
